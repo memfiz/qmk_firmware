@@ -7,13 +7,24 @@
  * edit it directly.
  */
 
+enum {
+  TD_LBRC_RBRC = 0
+};
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for Esc, twice for Caps Lock
+  [TD_LBRC_RBRC]  = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC)
+// Other declarations would go here, separated by commas, if you have them
+};
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = LAYOUT(
 		KC_1,     KC_2,  KC_3,    KC_4,    KC_5,    KC_6, 						KC_7,   KC_8,    KC_9,    KC_0,   KC_MINS,  KC_EQL,
-		KC_TAB,   KC_Q,  KC_W,    KC_E,    KC_R,    KC_T, 						KC_Y,   KC_U,    KC_I,    KC_O,   KC_P,     KC_BSPC,
+		KC_TAB,   KC_Q,  KC_W,    KC_E,    KC_R,    KC_T, 						KC_Y,   KC_U,    KC_I,    KC_O,   KC_P,     TD(TD_LBRC_RBRC),
 		KC_CAPS,  KC_A,  KC_S,    KC_D,    KC_F,    KC_G, 						KC_H,   KC_J,    KC_K,    KC_L,   KC_SCLN,  KC_QUOT,
-		KC_LSFT,  KC_Z,  KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,    XXXXXXX, KC_N,   KC_M,    KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+		KC_LSFT,  KC_Z,  KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,    KC_MUTE, KC_N,   KC_M,    KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
 						 KC_LCTL, KC_LALT, KC_RGUI, MO(1), KC_ENT, 	   KC_SPC,  MO(2),  KC_BSPC, KC_RSFT, KC_RGUI
         ),
 
@@ -28,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[2] = LAYOUT(
         _______,  _______, _______, _______, _______,  _______,                     _______, _______,    _______, _______,    _______,    _______,
         _______,  KC_INS,  KC_PSCR, KC_APP,  XXXXXXX,  XXXXXXX,                     KC_PGUP, C(KC_LEFT), KC_UP,   C(KC_RGHT), C(KC_BSPC), KC_BSPC,
-        _______,  KC_LALT, KC_LCTL, KC_LSFT,  XXXXXX,  KC_CAPS,                     KC_PGDN, KC_LEFT,    KC_DOWN, KC_RGHT,    KC_DEL,     KC_BSPC,
+        _______,  KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,  KC_CAPS,                     KC_PGDN, KC_LEFT,    KC_DOWN, KC_RGHT,    KC_DEL,     KC_BSPC,
         _______,  C(KC_Z), C(KC_X), C(KC_C),  C(KC_V), XXXXXXX, _______,   _______, XXXXXXX, KC_HOME, KC_DOWN, KC_END, XXXXXXX,
                   _______, _______, _______, _______,  MO(3),   _______,   _______, _______, _______, _______, _______
         ),
@@ -42,14 +53,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         )
 };
 
-// #if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
-// const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-//     [0] =   { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-//     [1] =  { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
-//     [2] =  { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(RGB_SPD, RGB_SPI)  },
-//     [3] = { ENCODER_CCW_CW(RGB_RMOD, RGB_MOD),          ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
-// };
-// #endif // defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
+
+#if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    [0] =   { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [1] =  { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
+    [2] =  { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(RGB_SPD, RGB_SPI)  },
+    [3] = { ENCODER_CCW_CW(RGB_RMOD, RGB_MOD),          ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
+};
+#endif // defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
 
 
 
